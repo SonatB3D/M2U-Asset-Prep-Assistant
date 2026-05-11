@@ -4,19 +4,19 @@ README
 ## Screenshots
 
 <p align="center">
-  <img src="images/m2u_apa.png" alt="M2U Asset Prep Assistant Screenshot 1" width="900">
+  <img src="M2U Asset Prep Assistant images/m2u_apa.png" alt="M2U Asset Prep Assistant Screenshot 1" width="900">
 </p>
 
 <p align="center">
-  <img src="images/m2u_apa2.png" alt="M2U Asset Prep Assistant Screenshot 2" width="900">
+  <img src="M2U Asset Prep Assistant images/m2u_apa2.png" alt="M2U Asset Prep Assistant Screenshot 2" width="900">
 </p>
 
 <p align="center">
-  <img src="images/m2u_apa3.png" alt="M2U Asset Prep Assistant Screenshot 3" width="900">
+  <img src="M2U Asset Prep Assistant images/m2u_apa3.png" alt="M2U Asset Prep Assistant Screenshot 3" width="900">
 </p>
 
 <p align="center">
-  <img src="images/m2u_ap4.png" alt="M2U Asset Prep Assistant Screenshot 4" width="900">
+  <img src="M2U Asset Prep Assistant images/m2u_ap4.png" alt="M2U Asset Prep Assistant Screenshot 4" width="900">
 </p>
 
 M2U Asset Prep Assistant
