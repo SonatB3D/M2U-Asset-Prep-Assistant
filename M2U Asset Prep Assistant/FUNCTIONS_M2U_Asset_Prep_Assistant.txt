@@ -1,0 +1,599 @@
+M2U ASSET PREP ASSISTANT
+FUNCTIONS
+
+This document describes the main functions and behavior of M2U Asset Prep Assistant.
+
+
+1. TOOL PURPOSE
+
+M2U Asset Prep Assistant prepares selected Maya static mesh assets before final validation
+and export in M2U Studio Custom.
+
+It is a preparation tool, not an export tool.
+
+Main goal:
+
+    Clean and prepare selected assets safely before running M2U Studio Custom.
+
+
+2. MAIN UI SECTIONS
+
+The interface is divided into the following sections:
+
+- Asset Scope
+- Safe Fix Options
+- Naming Prep
+- Pivot Prep
+- Grid Prep
+- Visibility / Lock Prep
+- Actions
+- Results
+
+
+3. ASSET SCOPE
+
+3.1 Front Axis
+
+Available options:
+
+- +X
+- -X
+- +Z
+- -Z
+
+This matches the front-axis logic used by M2U Studio Custom.
+Maya Y is treated as up / height.
+
+The Front Axis setting is important for pivot positions such as:
+
+- Bottom Front Center
+- Bottom Back Center
+- Bottom Front Left
+- Bottom Front Right
+- Top Front Center
+- Top Back Center
+
+3.2 Ignore UCX_* As Base Asset
+
+Default: enabled.
+
+When enabled, transforms starting with UCX_ are ignored as base assets.
+
+Reason:
+UCX meshes are collision meshes for Unreal Engine and should not be prepared as primary
+static mesh export assets.
+
+This behavior is compatible with M2U Studio Custom, which also treats UCX meshes as
+collision objects rather than base export assets.
+
+3.3 Include Descendant Mesh Shapes
+
+Default: enabled.
+
+When enabled, the selected transform can be treated as the asset root and descendant mesh
+shapes are included in analysis.
+
+Useful for grouped mesh workflows.
+
+
+4. SAFE FIX OPTIONS
+
+4.1 Duplicate Backup Before Fix
+
+Default: enabled.
+
+Creates a duplicate backup before modifying the selected asset.
+
+Backup names include:
+
+    _M2U_BACKUP_
+
+This protects the artist from accidental destructive changes.
+
+4.2 Hide Backups
+
+Default: enabled.
+
+When backup creation is enabled, the backup duplicate is hidden after creation.
+
+4.3 Freeze Transform
+
+Default: enabled.
+
+Applies freeze transform using Maya makeIdentity.
+
+This can fix non-zero translate/rotate values and non-one scale values before export.
+
+4.4 Delete Construction History
+
+Default: enabled.
+
+Deletes construction history from the selected asset.
+
+This prepares cleaner static mesh assets before M2U Studio Custom validation/export.
+
+
+5. NAMING PREP
+
+5.1 Add Prefix If Missing
+
+Default: disabled.
+
+Adds the required prefix to the asset name if missing.
+
+Default prefix:
+
+    SM_
+
+Example:
+
+    Chair_01
+    -> SM_Chair_01
+
+This is disabled by default because renaming can affect existing scene references,
+pipeline naming, or user organization.
+
+5.2 Required Prefix
+
+Default:
+
+    SM_
+
+Used by the Add Prefix If Missing option.
+
+5.3 Sanitize Asset Names
+
+Default: enabled.
+
+Replaces unsafe or invalid filename-style characters with underscores.
+
+Example:
+
+    My Chair#01
+    -> My_Chair_01
+
+This helps keep asset names safer for export, files, and Unreal-oriented pipelines.
+
+
+6. PIVOT PREP
+
+6.1 Move Pivot To Target
+
+Default: enabled.
+
+Moves the selected asset pivot to the selected pivot target.
+
+This does not move or resize geometry. It changes the transform pivot.
+
+6.2 Pivot Target Options
+
+Available pivot targets:
+
+- Center
+- Bottom Center
+- Bottom Front Center
+- Bottom Back Center
+- Bottom Left Center
+- Bottom Right Center
+- Bottom Front Left
+- Bottom Front Right
+- Bottom Back Left
+- Bottom Back Right
+- Front Center
+- Back Center
+- Left Center
+- Right Center
+- Top Center
+- Top Front Center
+- Top Back Center
+- Top Left Center
+- Top Right Center
+- Top Front Left
+- Top Front Right
+- Top Back Left
+- Top Back Right
+
+These pivot targets are designed to align with the M2U Studio Custom pivot validation workflow.
+
+6.3 Analyze Tolerance
+
+Default:
+
+    0.5 cm
+
+Used during analysis to report whether the current pivot is close enough to the expected
+target pivot location.
+
+
+7. GRID PREP
+
+7.1 Analyze Grid Fit
+
+Default: enabled.
+
+Checks whether the asset dimensions fit the selected grid step.
+
+For example, with a 10 cm grid step, width/height/depth should be multiples of 10 cm.
+
+7.2 Grid Step
+
+Default:
+
+    10.0 cm
+
+Used for grid fit analysis and optional snapping operations.
+
+7.3 Snap Bounds Min To Grid
+
+Default: disabled.
+
+Moves the asset so its minimum bounding box coordinates align to the nearest grid step:
+
+- minX
+- minY
+- minZ
+
+Important:
+This moves the asset. It does not resize geometry.
+If the asset size itself is not a multiple of the grid step, moving cannot fix that.
+
+7.4 Snap Pivot To Grid
+
+Default: disabled.
+
+Moves the asset so its current pivot position aligns to the nearest grid step.
+
+Important:
+This moves the asset. It does not resize geometry.
+
+
+8. VISIBILITY / LOCK PREP
+
+8.1 Analyze Visibility
+
+Default: enabled.
+
+Checks whether the selected asset is visible in its hierarchy.
+
+If the selected transform or a parent transform is hidden, the tool reports it.
+
+8.2 Analyze Locked Transform Attributes
+
+Default: enabled.
+
+Checks locked transform-related attributes:
+
+- translateX
+- translateY
+- translateZ
+- rotateX
+- rotateY
+- rotateZ
+- scaleX
+- scaleY
+- scaleZ
+- visibility
+
+8.3 Unlock Transform Attributes During Fix
+
+Default: disabled.
+
+Unlocks locked transform attributes before applying fixes.
+
+Disabled by default because locked attributes may be intentional.
+
+8.4 Make Selected Assets Visible During Fix
+
+Default: disabled.
+
+Enables visibility on selected assets during fix.
+
+Disabled by default because hidden states may be intentional.
+
+
+9. ACTION BUTTONS
+
+9.1 Analyze Selected Assets
+
+Analyzes all valid selected mesh transforms.
+
+The analysis reports:
+
+- current asset status
+- warnings
+- fixable issues
+- manual review items
+- errors
+- check results
+
+UCX_* transforms are ignored as base assets when the relevant option is enabled.
+
+9.2 Fix Selected Assets Using Enabled Options
+
+Applies the enabled fix operations to selected valid mesh transforms.
+
+Possible fix operations:
+
+- create hidden backup
+- sanitize name
+- add prefix if missing
+- delete construction history
+- freeze transform
+- move pivot to target
+- snap bounds minimum to grid
+- snap pivot to grid
+- unlock transform attributes
+- make selected asset visible
+
+After fixing, the tool analyzes the asset again and reports the final status.
+
+9.3 Analyze Again
+
+Runs analysis again using the current UI settings.
+
+9.4 Clear Results
+
+Clears the visible results area and resets the current result summary.
+
+
+10. RESULTS PANEL
+
+The Results panel displays a readable per-asset report.
+
+Typical report includes:
+
+- asset name
+- status
+- checks
+- warnings
+- fixable issues
+- manual review notes
+- fixed actions
+- errors
+
+Possible status labels include:
+
+- Ready
+- Warning
+- Can Fix
+- Needs Manual Review
+- Error
+
+
+11. ANALYSIS CHECKS
+
+The tool can analyze:
+
+11.1 Mesh Validity
+
+Checks whether the selected transform contains valid non-intermediate mesh shapes.
+
+11.2 Naming
+
+Checks whether the asset name uses the required prefix if naming prep is enabled.
+
+11.3 Unsafe Name Characters
+
+Checks whether the asset name contains characters that should be sanitized.
+
+11.4 Freeze Transform
+
+Checks whether translate/rotate/scale values are clean.
+
+11.5 Construction History
+
+Checks whether construction history exists.
+
+11.6 Pivot Position
+
+Compares current pivot against the selected pivot target.
+
+11.7 Grid Fit
+
+Checks whether asset dimensions are multiples of the selected grid step.
+
+11.8 Bounds Snap
+
+Checks whether bounding box coordinates align to the selected grid step.
+
+11.9 Visibility
+
+Checks whether the asset is visible through its transform hierarchy.
+
+11.10 Locked Transform Attributes
+
+Checks whether transform-related attributes are locked.
+
+
+12. FIX OPERATIONS
+
+12.1 Backup Creation
+
+Creates a duplicate backup before changing the asset.
+
+12.2 Rename / Prefix / Sanitize
+
+Can sanitize unsafe names and optionally add a required prefix.
+
+12.3 Delete History
+
+Deletes construction history.
+
+12.4 Freeze Transform
+
+Applies freeze transform.
+
+12.5 Pivot Move
+
+Moves the pivot to the selected target location.
+
+12.6 Bounds Min Snap
+
+Moves the asset so the minimum bounding box corner aligns to the grid.
+
+12.7 Pivot Snap
+
+Moves the asset so the pivot aligns to the grid.
+
+12.8 Visibility Fix
+
+Can enable selected asset visibility if enabled by the user.
+
+12.9 Locked Attribute Unlock
+
+Can unlock transform attributes if enabled by the user.
+
+
+13. M2U STUDIO CUSTOM INTEGRATION
+
+M2U Asset Prep Assistant integrates with M2U Studio Custom at the workflow level.
+
+It prepares assets before M2U Studio Custom performs final checks.
+
+Use Asset Prep Assistant for:
+
+- safe cleanup
+- pivot preparation
+- transform cleanup
+- history cleanup
+- naming preparation
+- grid alignment preparation
+
+Then use M2U Studio Custom for:
+
+- final validation
+- export blocking/warning logic
+- UCX collision checking
+- matched UCX mesh validation
+- FBX export
+- JSON report generation
+
+The tools are designed to complement each other rather than duplicate the same job.
+
+Important:
+The current Asset Prep Assistant UI does not include an Open M2U Studio Custom button.
+This is intentional. Both tools can be launched separately from the M2U_Tools shelf.
+
+
+14. INSTALLER FUNCTIONS
+
+The standalone installer performs the following operations:
+
+14.1 Creates Install Folder
+
+Creates:
+
+    M2U_Asset_Prep_Assistant
+
+inside the active Maya user scripts directory.
+
+Example:
+
+    Documents/maya/2024/scripts/M2U_Asset_Prep_Assistant/
+
+14.2 Writes Main Tool File
+
+Writes:
+
+    m2u_asset_prep_assistant.py
+
+14.3 Writes Friendly Launcher File
+
+Writes:
+
+    M2U Asset Prep Assistant.py
+
+This launcher is a readable convenience file. The real importable module is:
+
+    m2u_asset_prep_assistant.py
+
+14.4 Copies Icon
+
+If found next to the installer, copies:
+
+    m2u_asset_prep_icon.png
+
+14.5 Creates or Updates Shelf
+
+Creates M2U_Tools shelf if missing.
+
+If M2U_Tools already exists, the installer adds/updates the M2U Prep button inside it.
+
+14.6 Prevents Duplicate Shelf Buttons
+
+The installer removes the existing M2U Prep button with the same annotation ID before
+creating the updated button.
+
+14.7 Cleans Python Cache
+
+The installer removes old __pycache__ data for the installed tool folder.
+
+14.8 Adds Tool Folder To sys.path
+
+The installer makes the tool folder available for import in the current Maya session.
+
+14.9 Verifies Disk Write
+
+The installer checks that m2u_asset_prep_assistant.py physically exists on disk after writing.
+If it cannot verify the file, installation fails with a clear error.
+
+14.10 Writes Install Location Note
+
+The installer writes:
+
+    README_INSTALL_LOCATION.txt
+
+This file records the exact install paths used by Maya.
+
+
+15. IMPORTANT LIMITATIONS
+
+M2U Asset Prep Assistant does not automatically resize geometry.
+
+If an asset's width, height, or depth is not a multiple of the grid step, the tool can report it.
+It can move the asset to align bounds or pivot, but it cannot make the asset dimension itself
+fit the grid without resizing.
+
+M2U Asset Prep Assistant does not automatically create UCX collision.
+
+UCX creation and collision authoring remain separate modeling tasks. M2U Studio Custom can then
+validate whether UCX collision meshes are present and correctly matched.
+
+M2U Asset Prep Assistant does not perform final export.
+
+Use M2U Studio Custom for FBX export.
+
+
+16. RECOMMENDED PRODUCTION USE
+
+Recommended use per asset:
+
+1. Model the asset in Maya.
+2. Select the asset root transform.
+3. Run M2U Asset Prep Assistant analysis.
+4. Apply only safe/needed fixes.
+5. Run analysis again.
+6. Open M2U Studio Custom.
+7. Validate selected assets.
+8. Fix any final issues reported by M2U Studio Custom.
+9. Export using M2U Studio Custom.
+
+Recommended use for batches:
+
+1. Select multiple assets.
+2. Run Analyze Selected Assets.
+3. Review manual warnings.
+4. Use Fix Selected Assets only with safe enabled options.
+5. Validate the batch in M2U Studio Custom.
+6. Export ready assets from M2U Studio Custom.
+
+
+17. BEST PRACTICES
+
+- Keep Duplicate Backup Before Fix enabled.
+- Keep Add Prefix If Missing disabled until you are ready to rename assets.
+- Use Snap Bounds Min To Grid only when you want to move assets.
+- Use Snap Pivot To Grid only when pivot grid alignment is required.
+- Do not unlock transform attributes unless you understand why they are locked.
+- Use M2U Studio Custom after preparation for final validation and export.
+- Run the installer separately in each Maya version where you want the tool installed.

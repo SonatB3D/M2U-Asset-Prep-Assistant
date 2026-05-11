@@ -1,0 +1,47 @@
+M2U Asset Prep Assistant — LICENCE TERMS
+
+IMPORTANT
+Please read these terms before using, sharing, or redistributing this tool.
+
+1. OWNERSHIP
+M2U Studio Custom and its related files, code, shelf installer script, icons, and documentation remain the intellectual property of the author.
+
+2. ALLOWED USE
+You may:
+- download and use this tool for personal, educational, portfolio, evaluation, and internal workflow use, including both non-commercial and commercial use
+- install and run the tool on your own system
+- use the tool as part of your own content production workflow
+
+3. RESTRICTIONS
+You may not:
+- re-upload this tool to other websites, drives, forums, repositories, or marketplaces
+- redistribute the files in modified or unmodified form without permission
+- claim authorship of the tool
+- sell, sublicense, rent, bundle, or commercially redistribute the tool
+- publish edited versions as if they were official releases
+- remove or alter author credits, notices, or distribution terms
+
+4. OFFICIAL DISTRIBUTION
+This tool should only be downloaded from the author's official Github page or website, official profile, or official release location.
+If you received the files from an unofficial source, please obtain the latest version from the official source instead.
+
+5. MODIFICATION
+Private modification for personal testing or internal learning use may be allowed, but modified versions may not be publicly shared, redistributed, or represented as official without explicit permission from the author.
+
+6. COMMERCIAL USE
+Commercial redistribution, resale, repackaging, or inclusion in paid products/services is not allowed without explicit written permission from the author.
+
+7. NO WARRANTY
+This tool is provided "as is" without warranty of any kind.
+The author is not responsible for:
+- data loss
+- export issues
+- scene corruption
+- workflow interruption
+- compatibility issues with unsupported Maya versions or third-party environments
+
+9. ACCEPTANCE
+By downloading, installing, or using this tool, you agree to these licence terms.
+
+10. CONTACT / PERMISSION
+For redistribution requests, commercial licensing questions, or official permissions, contact the author through the official distribution page or official profile.
