@@ -16,7 +16,7 @@ README
 </p>
 
 <p align="center">
-  <img src="M2U Asset Prep Assistant images/m2u_ap4.png" alt="M2U Asset Prep Assistant Screenshot 4" width="900">
+   <img src="M2U Asset Prep Assistant images/m2u_apa4.png" alt="M2U Asset Prep Assistant Screenshot 4" width="900">
 </p>
 
 M2U Asset Prep Assistant
